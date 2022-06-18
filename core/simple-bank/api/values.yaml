@@ -58,7 +58,7 @@ base-service:
       - name: ENV
         value: production
       - name: DB_HOST
-        value: "simple-bank-service-postgresql-0.default.svc.cluster.local"
+        value: "simple-bank-service-postgresql.default.svc.cluster.local"
       - name: DB_PORT
         value: "5432"
       - name: DB_DBNAME
