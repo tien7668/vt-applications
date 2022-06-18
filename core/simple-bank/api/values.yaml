@@ -1,0 +1,114 @@
+base-service:
+  nameOverride: simple-bank-api
+  fullnameOverride: &name simple-bank-api
+  server:
+    revisionHistoryLimit: 1
+    image:
+      repository: asia.gcr.io/fast-audio-352608/simple_bank
+      tag: latest
+
+    serviceAccount:
+      create: true
+
+    overrideCommand:
+      - "/app/server"
+      - "api"
+      - "-c"
+      - "/etc/config/config.yaml"
+      - "-auto_migration"
+      - "auto"
+
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+      requests:
+        cpu: 200m
+        memory: 200Mi
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 4
+      targetCPUUtilizationPercentage: 60
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 300
+          policies:
+          - type: Percent
+            value: 10
+            periodSeconds: 20
+          - type: Pods
+            value: 2
+            periodSeconds: 20
+        scaleUp:
+          stabilizationWindowSeconds: 0
+          policies:
+          - type: Percent
+            value: 20
+            periodSeconds: 10
+          - type: Pods
+            value: 5
+            periodSeconds: 10
+          selectPolicy: Max
+    expose:
+      port: "8080"
+
+    ## CHANGE THIS
+    env:
+      - name: ENV
+        value: production
+      - name: DB_HOST
+        value: "postgres1-postgresql.default.svc.cluster.local"
+      - name: DB_PORT
+        value: "5432"
+      - name: DB_DBNAME
+        value: "simple_bank"
+      - name: DB_USER
+        value: "postgres"
+      - name: DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: *name
+            key: DB_PASSWORD
+
+    configMaps:
+      create: true
+      data:
+        - name: config.yaml
+          value: |-
+            http:
+              BindAddress: ":8080"
+              Mode: release #(debug,release,test)
+            db:
+              Host: please_replace_me
+              Port: please_replace_me
+              DBName: please_replace_me
+              User: please_replace_me
+              Password: please_replace_me
+              ConnLifeTime: 300
+              ConnTimeOut: 30
+              MaxIdleConns: 10
+              MaxOpenConns: 80
+              LogLevel: 1
+            redis:
+              RedisAddresses: notification-service-node-0.notification-service-headless.redis.svc:26379,notification-service-node-1.notification-service-headless.redis.svc:26379,notification-service-node-2.notification-service-headless.redis.svc:26379
+              Password:
+              MasterName: notification-service-master
+            asynq:
+              Concurrency: 10
+    service:
+      type: LoadBalancer
+      port: 8080
+
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config
+      readOnly: true
+
+    volumes:
+    - name: config-volume
+      configMap:
+        name: *name
+    secrets:
+      create: false
+      path: simple-bank-secrets

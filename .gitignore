@@ -5,4 +5,5 @@
 *.tgz
 
 .secret*.yaml
+.secret*.json
 !.secrets.enc.yaml
