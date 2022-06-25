@@ -43,4 +43,8 @@ base-service:
             periodSeconds: 10
           selectPolicy: Max
     expose:
-      port: "8080"
+      port: "80"
+
+    service:
+      type: LoadBalancer
+      port: 8080
