@@ -4,5 +4,5 @@ helm:
     value: asia.gcr.io/fast-audio-352608/core/kyberswap-interface
     forcestring: true
   - name: base-service.server.image.tag
-    value: main-989da50
+    value: main-4b453be
     forcestring: true
