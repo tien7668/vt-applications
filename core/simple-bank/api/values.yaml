@@ -4,7 +4,7 @@ base-service:
   server:
     revisionHistoryLimit: 1
     image:
-      repository: asia.gcr.io/fast-audio-352608/simple_bank
+      repository: asia.gcr.io/fast-audio-352608/simple-bank
       tag: main
 
     serviceAccount:
