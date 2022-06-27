@@ -5,7 +5,7 @@ base-service:
     revisionHistoryLimit: 1
     image:
       repository: asia.gcr.io/fast-audio-352608/simple_bank
-      tag: latest
+      tag: main
 
     serviceAccount:
       create: true
@@ -110,5 +110,5 @@ base-service:
       configMap:
         name: *name
     secrets:
-      create: false
-      path: simple-bank-secrets
+      create: true
+      path: core/simple-bank
