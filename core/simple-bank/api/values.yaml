@@ -58,7 +58,7 @@ base-service:
       - name: ENV
         value: production
       - name: DB_HOST
-        value: "simple-bank-postgresql.default.svc.cluster.local"
+        value: "simple-bank-service-postgres-postgresql.default.svc.cluster.local"
       - name: DB_PORT
         value: "5432"
       - name: DB_DBNAME
@@ -111,4 +111,4 @@ base-service:
         name: *name
     secrets:
       create: true
-      path: core/simple-bank
+      path: simple-bank-secrets-dev
