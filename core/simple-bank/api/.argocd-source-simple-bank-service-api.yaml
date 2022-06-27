@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: asia.gcr.io/fast-audio-352608/core/simple-bank
+    forcestring: true
+  - name: base-service.server.image.tag
+    value: main-ecfd66e
+    forcestring: true
