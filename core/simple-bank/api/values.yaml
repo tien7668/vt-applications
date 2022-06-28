@@ -110,5 +110,5 @@ base-service:
       configMap:
         name: *name
     secrets:
-      create: true
+      create: false
       path: simple-bank-secrets-dev
