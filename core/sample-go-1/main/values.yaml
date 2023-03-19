@@ -1,10 +1,10 @@
 base-service:
-  nameOverride: simple-go-1-main
-  fullnameOverride: &name simple-go-1-main
+  nameOverride: sample-go-1-main
+  fullnameOverride: &name sample-go-1-main
   server:
     revisionHistoryLimit: 1
     image:
-      repository: asia.gcr.io/fast-audio-352608/core/simple-go-1
+      repository: asia.gcr.io/fast-audio-352608/core/sample-go-1
       tag: main
 
     serviceAccount:
