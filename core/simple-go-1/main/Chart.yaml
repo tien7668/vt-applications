@@ -1,0 +1,8 @@
+apiVersion: v2
+name: simple-go-1-main
+type: application
+version: 0.1.0
+dependencies:
+  - name: base-service
+    version: 0.5.5
+    repository: https://charts.knstats.com
